@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <iframe src="iframe.html" width="500px" height="500px"></iframe>
+
+
+  <script>
+    // document.addEventListener("DOMContentLoaded", function(event) {
+    // setTimeout(function(){
+      // setTimeout(function(){
+      //   var emitter = new EventEmitter();
+      //   console.log(emitter);
+      // }, 2000)
+      var EventEmitter = EventEmitter || {};
+      var emitter = window.EventEmitter();
+      emitter.on('ended', function (data) {
+        h1.innerHTML = `Your name is: ${data.name}`;
+      });
+
+      emitter.on('started', function (data) {
+        h1.innerHTML = `Your name is: ${data.name}`;
+      });
+
+        console.log("Parent window", window.EventEmitter);
+    // }, 5000)
+
+
+    // });
+  </script>
+
+</body>
+</html>

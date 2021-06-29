@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script> -->
+</head>
+
+<body>
+  <input type="text">
+  <h1></h1>
+  <button>Change name</button>
+
+  <script>
+    class EventEmitter {
+      constructor() {
+        this.events = {};
+      }
+
+      emit(eventName, data) {
+        var event = this.events[eventName];
+        if( event ) {
+          console.log('emitter', event)
+          event.forEach(function(fn) {
+            fn.call(null, data);
+          });
+        }
+      }
+
+      on(eventName, fn) {
+        if(!this.events[eventName]) {
+          this.events[eventName] = [];
+        }
+
+        this.events[eventName].push(fn);
+        console.log("this.events", this.events)
+        return function() {
+          this.events[eventName] = this.events[eventName].filter(function(eventFn) {
+            if(fn !== eventFn)
+              return eventFn
+          });
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var input = document.querySelector('input[type="text"]');
+      var button = document.querySelector('button');
+      var h1 = document.querySelector('h1');
+
+      button.addEventListener('click', function() {
+        emitter.emit('ended', {name: input.value});
+      });
+
+      input.addEventListener('keyup', function() {
+        emitter.emit('started', {name: input.value});
+      });
+
+      var emitter = new EventEmitter();
+      emitter.on('ended', function (data) {
+        h1.innerHTML = `Your name is: ${data.name}`;
+      });
+
+      emitter.on('started', function (data) {
+        h1.innerHTML = `Your name is: ${data.name}`;
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
